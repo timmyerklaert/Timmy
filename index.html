@@ -5,11 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Timmy auf YouTube</title>
 <meta name="theme-color" content="#0f0f0f">
-<meta property="og:title" content="Was Höhlenmenschen WIRKLICH den ganzen Tag gemacht haben">
-<meta property="og:type" content="video.other">
+<meta property="og:title" content="Timmyerklärt auf YouTube">
+<meta property="og:description" content="Der Kanal Timmyerklärt auf YouTube.">
+<meta property="og:type" content="website">
 <script>
-  var VIDEO_ID = "TubmywqCcU8"; // hier neues Video eintragen
-  var web = "https://www.youtube.com/watch?v=" + VIDEO_ID;
+  var CHANNEL_ID = "UC10tZ4OsGiR7P1mKUqujaaQ";
+  var web = "https://www.youtube.com/@timmyerklart";
+  // Channel id is the path the YouTube app has routed for years. The public
+  // handle URL is the web and Universal Link target.
+  var channel = "www.youtube.com/channel/" + CHANNEL_ID;
   var ua = navigator.userAgent || "";
   var android = /Android/i.test(ua);
   var ios = /iPhone|iPad|iPod/i.test(ua);
@@ -17,13 +21,10 @@
   var facebook = /FBAN|FBAV/i.test(ua);
   var threads = /Barcelona/i.test(ua);
   var inApp = instagram || facebook || threads;
-  var thumb = "https://i.ytimg.com/vi/" + VIDEO_ID + "/maxresdefault.jpg";
-
-  document.write('<meta property="og:image" content="' + thumb + '">');
 
   // iOS Instagram ignores a scripted jump on load. A meta refresh to
   // instagram://extbrowser is the handoff it still honors (2026): Instagram
-  // asks once, then the real browser opens the video and Universal Link
+  // asks once, then the real browser opens the channel and Universal Link
   // starts the YouTube app. Threads uses the same trick with barcelona://.
   if (ios && threads) {
     window.__out = "barcelona://extbrowser/?url=" + encodeURIComponent(web);
@@ -36,31 +37,26 @@
 <style>
   body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f0f0f;color:#fff;font-family:system-ui,-apple-system,sans-serif;text-align:center;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
   .box{padding:24px;max-width:420px}
-  img{width:100%;aspect-ratio:16/9;object-fit:cover;background:#222;border-radius:14px;margin-bottom:18px}
-  h1{font-size:22px;line-height:1.25;margin:0 0 18px}
+  .mark{width:88px;height:88px;margin:0 auto 18px;border-radius:24px;background:#ff0000;display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1}
+  h1{font-size:22px;line-height:1.25;margin:0 0 6px}
+  .handle{color:#aaa;font-size:16px;margin:0 0 18px}
   a.btn{display:block;background:#ff0000;color:#fff;text-decoration:none;font-weight:700;font-size:20px;padding:18px;border-radius:999px}
   p{color:#aaa;font-size:14px;margin:16px 0 0}
 </style>
 </head>
 <body>
 <div class="box">
-  <img id="thumb" alt="">
-  <h1>Was Höhlenmenschen WIRKLICH den ganzen Tag gemacht haben</h1>
-  <a class="btn" id="btn" href="#">▶ Auf YouTube ansehen</a>
+  <div class="mark" aria-hidden="true">▶</div>
+  <h1>Timmyerklärt</h1>
+  <p class="handle">@timmyerklart</p>
+  <a class="btn" id="btn" href="https://www.youtube.com/@timmyerklart">▶ Auf YouTube öffnen</a>
   <p id="hint">Geht YouTube nicht von allein auf? Tipp einfach auf den Knopf.</p>
   <p id="menu" hidden>Wenn sich nichts tut: oben rechts auf •••, dann auf „In externem Browser öffnen“.</p>
 </div>
 <script>
-  var img = document.getElementById("thumb");
-  img.src = thumb;
-  img.onerror = function () {
-    img.onerror = null;
-    img.src = "https://i.ytimg.com/vi/" + VIDEO_ID + "/hqdefault.jpg";
-  };
-
   var app;
   if (android) {
-    app = "intent://www.youtube.com/watch?v=" + VIDEO_ID +
+    app = "intent://" + channel +
           "#Intent;package=com.google.android.youtube;scheme=https;S.browser_fallback_url=" +
           encodeURIComponent(web) + ";end";
   } else if (ios && (instagram || threads) && window.__out) {
@@ -68,7 +64,7 @@
   } else if (ios && facebook) {
     app = "x-safari-" + web;
   } else if (ios) {
-    app = "youtube://www.youtube.com/watch?v=" + VIDEO_ID;
+    app = "youtube://" + channel;
   } else {
     app = web;
   }
